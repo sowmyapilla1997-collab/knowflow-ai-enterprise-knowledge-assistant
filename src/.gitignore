@@ -1,0 +1,9 @@
+venv/
+venv312/
+__pycache__/
+*.pyc
+.DS_Store
+data/chroma_db/
+data/documents/
+ABC_Employee_HR_Policy.pdf
+.env
