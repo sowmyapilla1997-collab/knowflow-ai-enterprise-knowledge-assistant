@@ -147,21 +147,25 @@ Documents:
 
 Question: {question}
 """
-
+ 
         try:
             response = requests.post(
-                "http://localhost:11434/api/generate",
+                "https://api.groq.com/openai/v1/chat/completions",
+                headers={
+                    "Authorization": f"Bearer {st.secrets['GROQ_API_KEY']}",
+                    "Content-Type": "application/json"
+                },
                 json={
-                    "model": "llama3.2:1b",
-                    "prompt": prompt,
-                    "stream": False
+                    "model": "llama-3.3-70b-versatile",
+                    "messages": [
+                        {"role": "user", "content": prompt}
+                    ]
                 },
                 timeout=180
             )
 
             response.raise_for_status()
-
-            answer = response.json()["response"]
+            answer = response.json()["choices"][0]["message"]["content"]
 
             st.subheader("AI Answer")
             st.write(answer)
@@ -177,4 +181,5 @@ Question: {question}
                 st.write(f"📄 {source} — Page {page}")
 
         except requests.exceptions.RequestException as error:
-            st.error(f"Could not connect to Ollama: {error}")
+            st.error(f"Could not connect to Groq: {error}")
+      
