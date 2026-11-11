@@ -39,7 +39,7 @@ st.write("Find answers from your business documents.")
 
 model = load_model()
 
-client = chromadb.PersistentClient(path="data/chroma_db")
+client = chromadb.Client()
 
 collection = client.get_or_create_collection(
     name="company_documents",
